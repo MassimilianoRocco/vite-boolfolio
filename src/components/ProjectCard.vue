@@ -8,17 +8,47 @@ export default{
     return{
       base_url: 'http://127.0.0.1:8000',
       projects: '',
+      currentPage: 1,
     }
+  },
+  methods: {
+
+    apiConnection(){
+      axios
+      .get(this.base_url+ '/api/projects?page='+this.currentPage)
+      .then(response=> {
+      console.log(response);
+      this.projects = response.data.projects;
+    })
+    },
+
+    nextPage() {
+      this.currentPage = this.currentPage + 1;
+      this.apiConnection();
+    },
+    prevPage() {
+      this.currentPage = this.currentPage - 1;
+      this.apiConnection();
+    },
+    labelPage(page){
+      // console.log(this.projects.links[this.projects.links[2].label].label);
+      this.currentPage = this.projects.links[page.label].label;
+      this.apiConnection();
+    }
+    //OPPURE:
+  //   labelPage(label) {
+  //     this.projects.links.forEach(link => {
+  //     if (link.label === label) {
+  //     this.currentPage = link.url.split('?page=')[1];
+  //     this.apiConnection();
+  //   }
+  // });
+  // }
   },
 
 
 mounted(){
-  axios
-  .get(this.base_url+ '/api/projects')
-  .then(response=> {
-    console.log(response);
-    this.projects = response.data.projects;
-  })
+  this.apiConnection();
 }
 
 }
@@ -58,9 +88,9 @@ mounted(){
       <nav aria-label="Page navigation">
       <ul class="pagination    ">
         <li v-for="page in projects.links" class="page-item active" aria-current="page">
-          <a v-if="page.label.startsWith('&')" class="page-link" href="#">Previous</a>
-          <a v-else-if="page.label.startsWith('Next')" class="page-link" href="#">Next</a>
-          <a v-else class="page-link" href="#">{{ page.label }}</a>
+          <a v-if="page.label.startsWith('&')" @click="prevPage" class="page-link" href="#">Previous</a>
+          <a v-else-if="page.label.startsWith('Next')" @click="nextPage" class="page-link">Next</a>
+          <a v-else @click="labelPage(page)" class="page-link">{{ page.label }}</a>
         </li>
       </ul>
     </nav>
@@ -74,5 +104,10 @@ mounted(){
 .card_img{
   height: 400px;
   object-fit: cover;
+}
+
+/* AAAAA   JUST FOR TEST VIEW FIRST PROJECT(CAT STRAY) IMAGE  */
+.card_img:first-child{
+    object-position: right;
 }
 </style>
