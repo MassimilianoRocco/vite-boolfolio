@@ -1,6 +1,7 @@
 <script>
 import AppHeader from './components/AppHeader.vue';
-import ProjectCard from './components/ProjectCard.vue';
+import AppProjectList from './views/AppProjectList.vue';
+import AppTechList from './views/AppTechList.vue';
 
 
 export default{
@@ -8,7 +9,8 @@ export default{
 
   components:{
     AppHeader,
-    ProjectCard,
+    AppProjectList,
+    AppTechList
   },
 
   data(){
@@ -31,7 +33,6 @@ mounted(){
 
   <AppHeader />
   <router-view></router-view>
-  <!-- <ProjectCard/> -->
 
   </div>
 

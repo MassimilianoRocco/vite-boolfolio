@@ -33,10 +33,10 @@ mounted(){
                     </button>
                     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                         <div class="navbar-nav">
-                            <router-link :to="{ name: home }" class="nav-link active" aria-current="page">Home</router-link>
-                            <router-link :to="{ name: projectList }" class="nav-link">Projects List</router-link>
-                            <router-link :to="{ name: techList }" class="nav-link">Tech List</router-link>
-                            <router-link to="/aboutMe" class="nav-link">About me</router-link>
+                            <router-link :to="{ name: 'home' }" class="nav-link active" aria-current="page">Home</router-link>
+                            <router-link :to="{ name: 'projectList'}" class="nav-link">Projects List</router-link>
+                            <router-link :to="{ name: 'techList' }" class="nav-link">Tech List</router-link>
+                            <router-link :to="{ name: 'aboutMe' }" class="nav-link">About me</router-link>
                         </div>
                     </div>
                 </div>
