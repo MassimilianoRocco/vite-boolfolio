@@ -23,10 +23,12 @@ export default{
     },
 
     nextPage() {
-      this.currentPage = this.currentPage + 1;
+      // DA FIXARE NEI CASI MIN MAX PAGES
+      this.currentPage = this.currentPage + 1;  
       this.apiConnection();
     },
     prevPage() {
+      // DA FIXARE NEI CASI MIN MAX PAGES
       this.currentPage = this.currentPage - 1;
       this.apiConnection();
     },
@@ -85,15 +87,17 @@ mounted(){
 
 
     <!-- PAGINATION  -->
-      <nav aria-label="Page navigation">
-      <ul class="pagination    ">
-        <li v-for="page in projects.links" class="page-item active" aria-current="page">
-          <a v-if="page.label.startsWith('&')" @click="prevPage" class="page-link" href="#">Previous</a>
-          <a v-else-if="page.label.startsWith('Next')" @click="nextPage" class="page-link">Next</a>
-          <a v-else @click="labelPage(page)" class="page-link">{{ page.label }}</a>
-        </li>
-      </ul>
-    </nav>
+      <div class="pagination_container w-100 my-3">
+        <nav aria-label="Page navigation">
+          <ul class="pagination    ">
+            <li v-for="page in projects.links" class="page-item active" aria-current="page">
+              <button v-if="page.label.startsWith('&')" @click="prevPage" class="page-link">Previous</button>
+              <button v-else-if="page.label.startsWith('Next')" @click="nextPage" class="page-link">Next</button>
+              <button v-else @click="labelPage(page)" class="page-link">{{ page.label }}</button>
+            </li>
+          </ul>
+        </nav>
+      </div>
 
 </div>
 

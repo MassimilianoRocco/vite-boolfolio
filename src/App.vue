@@ -1,10 +1,13 @@
 <script>
+import AppHeader from './components/AppHeader.vue';
 import ProjectCard from './components/ProjectCard.vue';
+
 
 export default{
   name: 'App',
 
   components:{
+    AppHeader,
     ProjectCard,
   },
 
@@ -23,12 +26,12 @@ mounted(){
 </script>
 
 <template>
-<h1>Welcome</h1>
 
-<div class="container">
-  
+<div class="app_Container w-100">
 
-    <ProjectCard/>
+  <AppHeader />
+  <router-view></router-view>
+  <!-- <ProjectCard/> -->
 
   </div>
 
