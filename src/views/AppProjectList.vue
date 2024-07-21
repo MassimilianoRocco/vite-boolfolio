@@ -23,13 +23,16 @@ export default{
     },
 
     nextPage() {
-      // DA FIXARE NEI CASI MIN MAX PAGES
-      this.currentPage = this.currentPage + 1;  
+      if(this.currentPage < this.projects.last_page){
+        
+        this.currentPage++;  
+      }
       this.apiConnection();
     },
     prevPage() {
-      // DA FIXARE NEI CASI MIN MAX PAGES
-      this.currentPage = this.currentPage - 1;
+      if(this.currentPage > 1){
+        this.currentPage--;
+      }
       this.apiConnection();
     },
     labelPage(page){
@@ -58,11 +61,11 @@ mounted(){
 
 <template>
 
-<div class="row d-flex nowrap row-cols-1 row-cols-md-2 row-cols-lg-3">
+<div class="p-4 row d-flex nowrap row-cols-1 row-cols-md-2 row-cols-lg-3">
 
     <!-- CARD -->
     <div class="col my-2" v-for="project in projects.data">
-        <div class="card h-100">
+        <div class="card h-100 p-2">
 
         <template v-if="!project.immagine.startsWith('http')">
         <img :src="base_url + '/storage/'+ project.immagine" alt="" loading="lazy" class="card_img card-img-top" >
@@ -90,7 +93,7 @@ mounted(){
       <div class="pagination_container w-100 my-3">
         <nav aria-label="Page navigation">
           <ul class="pagination    ">
-            <li v-for="page in projects.links" class="page-item active" aria-current="page">
+            <li v-for="page in projects.links" class="page-item " :class="page.active == true ? 'active' : '' " aria-current="page">
               <button v-if="page.label.startsWith('&')" @click="prevPage" class="page-link">Previous</button>
               <button v-else-if="page.label.startsWith('Next')" @click="nextPage" class="page-link">Next</button>
               <button v-else @click="labelPage(page)" class="page-link">{{ page.label }}</button>

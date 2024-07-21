@@ -22,17 +22,18 @@ export default{
     },
 
     nextPage() {
-      // DA FIXARE NEI CASI MIN MAX PAGES
-      this.currentPage = this.currentPage + 1;  
+      if(this.currentPage < this.techs.last_page){
+        this.currentPage++;  
+      }
       this.apiConnection();
     },
     prevPage() {
-      // DA FIXARE NEI CASI MIN MAX PAGES
-      this.currentPage = this.currentPage - 1;
+      if(this.currentPage > 1){
+        this.currentPage--;
+      }
       this.apiConnection();
     },
     labelPage(page){
-      // console.log(this.projects.links[this.projects.links[2].label].label);
       this.currentPage = this.projects.links[page.label].label;
       this.apiConnection();
     }
@@ -53,11 +54,16 @@ mounted(){
       <div class="col mb-4" v-for="tech in techs.data">
         <div class="card h-100">
           <div class="card-body">
-            <h5 class="card-title">{{tech.name}}</h5>
+
+            <h3 class="card-title">{{tech.name}}</h3>
             <h6 class="card-subtitle mb-2 text-body-secondary"> <i :class=tech.icon></i></h6>
             <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-
-            <!-- INSERIRE LINK AI PROGETTI -->
+            <ul v-for="proj in tech.projects">
+              <li>
+                <h5> {{ proj.titolo }} </h5>
+                <img :src="base_url + '/storage/'+ proj.immagine" alt="" loading="lazy" class="card_img card-img-bottom" >
+              </li>
+            </ul>
 
           </div>
         </div>
@@ -81,5 +87,8 @@ mounted(){
 </template>
 
 <style scoped>
-
+  img{
+    width: 200px;
+    height: 100px;
+  }
 </style>
