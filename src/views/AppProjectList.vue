@@ -84,8 +84,7 @@ mounted(){
               </p>
               
           </div>
-          <router-link :to="{ name: 'singleProject', params: {id: project.id}
-           }" class="btn btn-outline-success w-25 ms-3">Info Project</router-link>
+          <router-link :to="{ name: 'singleProject', params: {id: project.id}}" class="btn btn-outline-success w-25 ms-3">Info Project</router-link>
         </div>
     </div>
 

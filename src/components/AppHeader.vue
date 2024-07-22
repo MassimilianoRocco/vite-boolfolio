@@ -37,7 +37,6 @@ mounted(){
                             <router-link :to="{ name: 'projectList'}" class="nav-link">Projects List</router-link>
                             <router-link :to="{ name: 'techList' }" class="nav-link">Tech List</router-link>
                             <router-link :to="{ name: 'aboutMe' }" class="nav-link">About me</router-link>
-                            <router-link :to="{ name: 'singleProject' }" class="nav-link">SingleProject</router-link>
                         </div>
                     </div>
                 </div>

@@ -1,12 +1,13 @@
-
 <script>
+
+import axios from 'axios';
 
 export default{
   name: 'AppSingleProject',
 
   data(){
     return{
-      base_url: 'http://127.0.0.1:8000',
+      base_url: 'http://127.0.0.1:8000/',
       project: null,
     }
   },
@@ -45,11 +46,16 @@ mounted(){
 <template>
     <div v-if="project" class="singleProject_container">
       <div class="row justify-content-center">
-        <div class="card" style="width: 50rem;">
-          <img src="..." class="card-img-top" alt="...">
+        <div class="card p-2" style="width: 50rem;">
+          <div v-if="!project.immagine.startsWith('http')">
+            <img :src="base_url + 'storage/'+ project.immagine" alt="" loading="lazy" class="card_img card-img-top" >
+          </div>
+          <div v-else>
+            <img :src="project.immagine" alt="" loading="lazy" class="card_img card-img-top"  >
+          </div>
           <div class="card-body">
-              <h5 class="card-title">{{project.titolo}}</h5>
-              <p class="card-text">{{project.descrizione}}</p>
+            <h5 class="card-title">{{project.titolo}}</h5>
+            <p class="card-text">{{project.descrizione}}</p>
           </div>
         </div>
       </div>
