@@ -4,6 +4,7 @@ import AppHome from './views/AppHome.vue';
 import AppAboutMe from './views/AppAboutMe.vue';
 import AppProjectList from './views/AppProjectList.vue';
 import AppTechList from './views/AppTechList.vue';
+import AppSingleProject from './views/AppSingleProject.vue';
 
 
 const router = createRouter({
@@ -28,6 +29,11 @@ const router = createRouter({
             path: '/techList',
             name: 'techList',
             component: AppTechList
+        },
+        {
+            path: '/singleProject/:id',
+            name: 'singleProject',
+            component: AppSingleProject
         },
     ]
 });

@@ -1,7 +1,7 @@
 <script>
 import AppHeader from './components/AppHeader.vue';
-import AppProjectList from './views/AppProjectList.vue';
-import AppTechList from './views/AppTechList.vue';
+
+
 
 
 export default{
@@ -9,8 +9,7 @@ export default{
 
   components:{
     AppHeader,
-    AppProjectList,
-    AppTechList
+ 
   },
 
   data(){
@@ -29,10 +28,10 @@ mounted(){
 
 <template>
 
-<div class="app_Container w-100">
+  <div class="app_Container w-100">
 
-  <AppHeader />
-  <router-view></router-view>
+    <AppHeader />
+    <router-view></router-view>
 
   </div>
 

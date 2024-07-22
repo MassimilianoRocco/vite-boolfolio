@@ -67,24 +67,25 @@ mounted(){
     <div class="col my-2" v-for="project in projects.data">
         <div class="card h-100 p-2">
 
-        <template v-if="!project.immagine.startsWith('http')">
-        <img :src="base_url + '/storage/'+ project.immagine" alt="" loading="lazy" class="card_img card-img-top" >
-        </template>
-        <template v-else>
-            <img :src="project.immagine" alt="" loading="lazy" class="card_img card-img-top"  >
-        </template>
+          <template v-if="!project.immagine.startsWith('http')">
+            <img :src="base_url + '/storage/'+ project.immagine" alt="" loading="lazy" class="card_img card-img-top" >
+          </template>
+          <template v-else>
+              <img :src="project.immagine" alt="" loading="lazy" class="card_img card-img-top"  >
+          </template>
 
-        <div class="card-body">
-            <h5 class="card-title"> {{ project.titolo }}</h5>
-            <p class="card-text">Tecnologie: <span v-for="tech in project.technologies">{{ tech.name }} - </span>
-            </p>
-            <p class="card-text">
-            Descrizione:
-            {{ project.descrizione }}
-            </p>
-            
-        </div>
-        <a href="#" class="btn btn-primary">Go somewhere</a>
+          <div class="card-body">
+              <h5 class="card-title"> {{ project.titolo }}</h5>
+              <p class="card-text">Tecnologie: <span v-for="tech in project.technologies">{{ tech.name }} - </span>
+              </p>
+              <p class="card-text">
+              Descrizione:
+              {{ project.descrizione }}
+              </p>
+              
+          </div>
+          <router-link :to="{ name: 'singleProject', params: {id: project.id}
+           }" class="btn btn-outline-success w-25 ms-3">Info Project</router-link>
         </div>
     </div>
 
