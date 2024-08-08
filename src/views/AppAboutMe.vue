@@ -1,15 +1,49 @@
 <script>
+import axios from 'axios';
 
 export default{
   name: 'AppAboutMe',
 
   data(){
     return{
-    
+      name:'',
+      email:'',
+      message:'',
+      errors: {}, /*se ci sono errori di validazione, ritorneremo indietro con una risposta che li indicherà all'utente all'interno del form  */
+      loading: false, /*quando il form sta caricando (quando invia la richiesta e torna indietro), ritornerà true quando la risposta viene inviata e false quando ritorna */
+      success: false,
     }
   },
   methods: {
+    sendMessage(){
 
+      //prepare the request payLoad
+      const data = {
+        'name':this.name,
+        'email':this.email,
+        'message':this.message
+      }
+      console.log(data);
+
+      //send axios post request
+      axios.post('http://127.0.0.1:8000/api/lead', data)
+      .then(response=>{
+        console.log(response);
+
+        if(response.data.success){
+          this.success = true;
+          this.errors = {};
+
+          this.name='';
+          this.email='';
+          this.message='';
+        }
+        else{
+          this.success = false;
+          this.errors = response.data.errors;
+        }
+      })
+    }
 
   },
 
@@ -23,24 +57,46 @@ mounted(){
 
 <template>
   <div class="container-fluid">
+
+    <template v-if="success">
+      <div class="alert alert-success" role="alert"><strong>Message received - </strong>We will get back to you as soon as possible.</div>
+    </template>
+
     <div class="row justify-content-center">
       <div class="col-md-8">
        <h1>About Me</h1>
-       <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Libero architecto odit ratione suscipit iusto! Culpa beatae amet, vitae tempora facere assumenda. Asperiores adipisci, modi distinctio praesentium accusantium quis perferendis excepturi?
-       Incidunt non quaerat illum iusto deserunt aliquid rem et optio voluptatibus, dolorum rerum dolor ducimus officiis. Error officiis libero autem nobis reprehenderit asperiores ut rerum vero. Corporis velit explicabo hic.
-       Perspiciatis tenetur voluptatem esse iure, consequatur ipsa neque sequi? Possimus nisi, enim sapiente placeat aliquam numquam tempora alias? Labore, omnis esse delectus incidunt magni saepe fugit eius molestias quaerat ullam!
-       Eligendi aut earum non atque modi odio labore iusto magnam repellendus impedit qui nihil ex, sequi voluptatibus quisquam tempore saepe cupiditate dolorum odit facilis nostrum. Officia, temporibus quidem. Fugiat, ipsam.
-       Adipisci, voluptatem fugit corrupti quia dolor ratione blanditiis sed omnis cumque incidunt ad laudantium deserunt voluptas? Magni ipsam pariatur assumenda, accusamus minima eaque tempora possimus qui ullam inventore id? Distinctio!
-       Nulla commodi, ipsa, deleniti et natus quibusdam, quidem illo consectetur ex ullam quam. Exercitationem perferendis sapiente pariatur iure soluta amet explicabo et, totam voluptatibus obcaecati repellendus at veritatis eaque ipsum.
-       Pariatur iste expedita aut nemo est veritatis nam? Possimus harum nobis accusantium vel, sint rem nam. Placeat tenetur natus corporis neque, error fuga reiciendis alias est. Consectetur impedit itaque vel!
-       Reprehenderit minima velit recusandae. Sapiente autem incidunt voluptatem ex voluptates consectetur, unde obcaecati assumenda, reprehenderit labore nemo optio quisquam error magni? Eaque ipsam voluptatem minus cum repellat eveniet necessitatibus assumenda?
-       Vel sapiente quidem est aspernatur suscipit perferendis in voluptate, esse dicta, odit atque nesciunt iure asperiores, debitis quibusdam dolore. Voluptates voluptatibus quidem aspernatur repudiandae accusamus iste soluta magnam cumque consequuntur.
-       Saepe, quam laboriosam consequuntur, est minus sit autem dicta cupiditate, maiores perspiciatis vel excepturi fuga aspernatur error earum veniam? Assumenda aspernatur velit temporibus tenetur placeat ea quisquam harum corrupti consectetur!
-       Tenetur similique ipsa aspernatur optio fugit nesciunt rerum quibusdam ipsam, qui aliquam nobis, accusamus, magnam esse id nostrum necessitatibus. Cumque doloremque delectus tenetur obcaecati ab sunt, consequuntur et architecto impedit.
-       Repudiandae, dolorum adipisci veniam nihil aut odio unde voluptas tenetur eos dolore esse quae debitis placeat. Eligendi, dolorem nostrum impedit illum, reiciendis dignissimos debitis in fuga magnam praesentium ducimus excepturi.
-       Impedit ea aspernatur praesentium vitae aut pariatur debitis at non adipisci dolor sit sint deleniti ducimus magnam beatae illo laborum voluptatem, qui, repudiandae a dolorem. Autem incidunt id doloribus quaerat.
-       Voluptate, quae harum eaque quod neque est, laboriosam inventore quis magnam facilis exercitationem itaque esse aliquam architecto. Sint, consequatur recusandae ipsum quas veniam corporis dolor minus facere similique repudiandae suscipit.
-       Sed, rem illum nam delectus optio quibusdam nostrum officia, cumque odio, deserunt minus suscipit voluptatum. Asperiores eum dicta, nemo exercitationem dolore cumque magni officia quasi explicabo, fuga, quos natus soluta.</p>
+
+       <form class="py-5" @submit.prevent="sendMessage()">
+          <div class="mb-3">
+            <label for="InputName" class="form-label">Name</label>
+            <input type="text" class="form-control" :class="{'is-invalid' : errors.name}" id="InputName" aria-describedby="nameHelp" v-model="name">
+
+            <p v-for="(error, index) in errors.name" :key="'name-error-' + index" class="text-danger">
+              {{ error }}
+            </p>
+          </div>
+
+          <div class="mb-3">
+            <label for="InputEmail" class="form-label">Email</label>
+            <input type="email" class="form-control" :class="{'is-invalid' : errors.email}" id="InputEmail" aria-describedby="emailHelp" v-model="email">
+            <p v-for="(error, index) in errors.email" :key="'email-error-' + index" class="text-danger">
+              {{ error }}
+            </p>
+
+            <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label" for="InputMessage">Message</label>
+            <textarea type="textarea" class="form-control" :class="{'is-invalid' : errors.message}" id="InputMessage" rows="8" aria-describedby="messageHelp" v-model="message"></textarea>
+
+            <p v-for="(error, index) in errors.message" :key="'message-error-' + index" class="text-danger">
+              {{ error }}
+            </p>
+          </div>
+
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
       </div>
     </div>
   </div>
